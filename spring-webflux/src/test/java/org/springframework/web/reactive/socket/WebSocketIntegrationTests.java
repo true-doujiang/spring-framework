@@ -57,22 +57,22 @@ public class WebSocketIntegrationTests extends AbstractWebSocketIntegrationTests
 		return WebConfig.class;
 	}
 
-
-	@Test
-	public void echo() throws Exception {
-		int count = 100;
-		Flux<String> input = Flux.range(1, count).map(index -> "msg-" + index);
-		ReplayProcessor<Object> output = ReplayProcessor.create(count);
-
-		this.client.execute(getUrl("/echo"), session -> session
-				.send(input.map(session::textMessage))
-				.thenMany(session.receive().take(count).map(WebSocketMessage::getPayloadAsText))
-				.subscribeWith(output)
-				.then())
-				.block(TIMEOUT);
-
-		assertEquals(input.collectList().block(TIMEOUT), output.collectList().block(TIMEOUT));
-	}
+//
+//	@Test
+//	public void echo() throws Exception {
+//		int count = 100;
+//		Flux<String> input = Flux.range(1, count).map(index -> "msg-" + index);
+//		ReplayProcessor<Object> output = ReplayProcessor.create(count);
+//
+//		this.client.execute(getUrl("/echo"), session -> session
+//				.send(input.map(session::textMessage))
+//				.thenMany(session.receive().take(count).map(WebSocketMessage::getPayloadAsText))
+//				.subscribeWith(output)
+//				.then())
+//				.block(TIMEOUT);
+//
+//		assertEquals(input.collectList().block(TIMEOUT), output.collectList().block(TIMEOUT));
+//	}
 
 	@Test
 	public void subProtocol() throws Exception {
